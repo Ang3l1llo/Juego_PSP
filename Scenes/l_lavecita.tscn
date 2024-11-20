@@ -1,0 +1,78 @@
+[gd_scene load_steps=12 format=3 uid="uid://cswhvpc2y8p1i"]
+
+[ext_resource type="Texture2D" uid="uid://brcq4ywvxrrwj" path="res://Assets/New Piskel (9).png" id="1_k5q0g"]
+[ext_resource type="Script" path="res://Scripts/LLavecita.cs" id="1_tfot0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pyo2n"]
+atlas = ExtResource("1_k5q0g")
+region = Rect2(0, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w1jif"]
+atlas = ExtResource("1_k5q0g")
+region = Rect2(20, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v77xf"]
+atlas = ExtResource("1_k5q0g")
+region = Rect2(40, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kn4sa"]
+atlas = ExtResource("1_k5q0g")
+region = Rect2(0, 20, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s4p7m"]
+atlas = ExtResource("1_k5q0g")
+region = Rect2(20, 20, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oor8r"]
+atlas = ExtResource("1_k5q0g")
+region = Rect2(40, 20, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dt5pl"]
+atlas = ExtResource("1_k5q0g")
+region = Rect2(0, 40, 20, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l3u8j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pyo2n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w1jif")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v77xf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kn4sa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s4p7m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oor8r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dt5pl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4lif8"]
+radius = 5.38516
+
+[node name="LLavecita" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_tfot0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_l3u8j")
+autoplay = "default"
+frame_progress = 0.97365
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4lif8")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
