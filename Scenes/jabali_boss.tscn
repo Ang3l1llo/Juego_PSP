@@ -1,6 +1,7 @@
-[gd_scene load_steps=25 format=3 uid="uid://bmdirlqftnyvc"]
+[gd_scene load_steps=27 format=3 uid="uid://bmdirlqftnyvc"]
 
 [ext_resource type="Texture2D" uid="uid://ceremr21u0ia5" path="res://Assets/Mob/Boar/Idle/Idle-Sheet-export-Back.png" id="1_6ssov"]
+[ext_resource type="Script" path="res://Scripts/JabaliBoss.cs" id="1_artvo"]
 [ext_resource type="Texture2D" uid="uid://bpnocbcoc23e6" path="res://Assets/Mob/Boar/Hit-Vanish/Hit-Sheet-Black.png" id="1_w1gr8"]
 [ext_resource type="Texture2D" uid="uid://btpsnvqm76x1f" path="res://Assets/Mob/Boar/Run/Run-Sheet-Black.png" id="3_fkbk0"]
 [ext_resource type="Texture2D" uid="uid://l4bdoowcl5bi" path="res://Assets/Mob/Boar/Walk/Walk-Base-SheetBlack.png" id="4_7lhr4"]
@@ -157,7 +158,12 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_jgdq8"]
 radius = 12.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l40rd"]
+radius = 6.0
+height = 22.0
+
 [node name="jabali_boss" type="CharacterBody2D"]
+script = ExtResource("1_artvo")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_oqlg6")
@@ -169,3 +175,19 @@ frame_progress = 0.769997
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3, 6)
 shape = SubResource("CircleShape2D_jgdq8")
+
+[node name="DamageArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+position = Vector2(-15, 6)
+shape = SubResource("CapsuleShape2D_l40rd")
+
+[node name="StepTimer" type="Timer" parent="."]
+
+[node name="DeathTimer" type="Timer" parent="."]
+
+[node name="HitTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="StepTimer" to="." method="TakeStep"]
+[connection signal="timeout" from="DeathTimer" to="." method="TimeOut"]
+[connection signal="timeout" from="HitTimer" to="." method="GetHit"]

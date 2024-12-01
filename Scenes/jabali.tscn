@@ -1,5 +1,6 @@
-[gd_scene load_steps=25 format=3 uid="uid://bj0v4e1g885gg"]
+[gd_scene load_steps=27 format=3 uid="uid://bj0v4e1g885gg"]
 
+[ext_resource type="Script" path="res://Scripts/Jabali.cs" id="1_34c70"]
 [ext_resource type="Texture2D" uid="uid://24noxx6w00hl" path="res://Assets/Mob/Boar/Idle/Idle-Sheet.png" id="1_vam2w"]
 [ext_resource type="Texture2D" uid="uid://dq0fdgeb45jvk" path="res://Assets/Mob/Boar/Hit-Vanish/Hit-Sheet.png" id="1_yvhx7"]
 [ext_resource type="Texture2D" uid="uid://bxl47ilkvpym3" path="res://Assets/Mob/Boar/Run/Run-Sheet.png" id="2_7lpeq"]
@@ -86,7 +87,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7okcb")
 }],
-"loop": true,
+"loop": false,
 "name": &"hit",
 "speed": 5.0
 }, {
@@ -126,7 +127,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xmcmb")
 }],
-"loop": true,
+"loop": false,
 "name": &"run",
 "speed": 15.0
 }, {
@@ -149,7 +150,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wwe01")
 }],
-"loop": true,
+"loop": false,
 "name": &"walk",
 "speed": 5.0
 }]
@@ -157,13 +158,37 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_nehku"]
 radius = 11.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5smio"]
+radius = 6.0
+height = 20.0
+
 [node name="jabali" type="CharacterBody2D"]
+script = ExtResource("1_34c70")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_y2y46")
-animation = &"idle"
+animation = &"hit"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, 5)
 shape = SubResource("CircleShape2D_nehku")
+
+[node name="DamageArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+position = Vector2(-14, 5)
+shape = SubResource("CapsuleShape2D_5smio")
+
+[node name="StepTimer" type="Timer" parent="."]
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="HitTimer" type="Timer" parent="."]
+wait_time = 0.9
+
+[connection signal="body_entered" from="DamageArea" to="." method="OnBodyEntered"]
+[connection signal="timeout" from="StepTimer" to="." method="TakeStep"]
+[connection signal="timeout" from="DeathTimer" to="." method="TimeOut"]
+[connection signal="timeout" from="HitTimer" to="." method="GetHit"]

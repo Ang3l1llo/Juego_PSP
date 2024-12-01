@@ -303,7 +303,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_medpw")
 }],
-"loop": true,
+"loop": false,
 "name": &"jump",
 "speed": 9.0
 }, {
@@ -352,7 +352,7 @@ script = ExtResource("1_bow57")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(3, -26)
 sprite_frames = SubResource("SpriteFrames_vx5k8")
-animation = &"run"
+animation = &"attack"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -368,4 +368,9 @@ script = ExtResource("7_33tfo")
 position = Vector2(31.25, -31)
 shape = SubResource("RectangleShape2D_kmevj")
 
-[connection signal="body_entered" from="Sword" to="Sword" method="_on_body_entered"]
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="body_entered" from="Sword" to="Sword" method="onBodyEntered"]
+[connection signal="timeout" from="Timer" to="." method="TimeOut"]

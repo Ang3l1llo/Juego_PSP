@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://3s67wc7na4fx"]
+[gd_scene load_steps=29 format=3 uid="uid://3s67wc7na4fx"]
 
 [ext_resource type="Texture2D" uid="uid://bt8g6ru4sklu7" path="res://Assets/Mob/Snail/Dead-Sheet.png" id="1_3wdmc"]
 [ext_resource type="Texture2D" uid="uid://ckgla05x71srl" path="res://Assets/Mob/Snail/walk-Sheet.png" id="1_vjjqc"]
@@ -107,7 +107,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f40r2")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 4.0
 }, {
@@ -136,7 +136,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nxo0x")
 }],
-"loop": true,
+"loop": false,
 "name": &"hide",
 "speed": 4.0
 }, {
@@ -173,6 +173,9 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_dro4r"]
 radius = 12.1655
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lpstn"]
+radius = 6.0
+
 [node name="caracol" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 5
@@ -180,16 +183,26 @@ script = ExtResource("1_xplxo")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_c3djf")
-animation = &"death"
+animation = &"hide"
 autoplay = "idle"
-frame_progress = 0.875245
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4)
 shape = SubResource("CircleShape2D_dro4r")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 1.25
+wait_time = 1.1
 one_shot = true
 
+[node name="DamageArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+position = Vector2(-16, 2)
+shape = SubResource("CapsuleShape2D_lpstn")
+
+[node name="HideTimer" type="Timer" parent="."]
+wait_time = 1.5
+
 [connection signal="timeout" from="Timer" to="." method="TimeOut"]
+[connection signal="body_entered" from="DamageArea" to="." method="OnBodyEntered"]
+[connection signal="timeout" from="HideTimer" to="." method="ExitHideState"]
