@@ -7,7 +7,12 @@ public partial class LLavecita : Area2D
 
 	
 	public void _on_body_entered (Node2D body){
-		GD.Print("Llavesit pami");
-		QueueFree();
+		
+		if (body is Player player) 
+		{
+			GD.Print("Llavesita pami");
+			player.AddToInventory("key"); 
+			QueueFree(); 
+		}
 	}	
 }

@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://cifqhwkwrg3y6"]
+
+[ext_resource type="Script" path="res://Scripts/MenuMuerte.cs" id="1_6pdjv"]
+[ext_resource type="Texture2D" uid="uid://c2bu28qx0m1ht" path="res://Assets/Background/pngimg.com - game_over_PNG16.png" id="2_3wusj"]
+
+[node name="Menu Muerte" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6pdjv")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 356.0
+offset_right = 626.0
+offset_bottom = 434.0
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Try Again"
+
+[node name="Button2" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Back to Menu"
+
+[node name="Pngimg_com-GameOverPng16" type="Sprite2D" parent="."]
+position = Vector2(542, 194)
+texture = ExtResource("2_3wusj")
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button2" to="." method="_on_button_2_pressed"]

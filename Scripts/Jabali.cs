@@ -17,29 +17,27 @@ public partial class Jabali : CharacterBody2D
 	private Area2D damageArea; 
 	private bool isRunning = false; 
 	private bool isTakingDamage = false; 
-	private bool isDead = false; // Nueva variable para gestionar la muerte
+	private bool isDead = false; 
 	private Vector2 knockBack;
 
 	public override void _Ready()
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		player = GetNode<Node2D>("/root/Game/Player");
-		stepTimer = GetNode<Timer>("StepTimer");
-		stepTimer.Timeout += TakeStep;
 		deathTimer = GetNode<Timer>("DeathTimer");
 		deathTimer.Timeout += TimeOut;
 		hitTimer = GetNode<Timer>("HitTimer"); 
 		hitTimer.Timeout += GetHit; 
-
 		damageArea = GetNode<Area2D>("DamageArea");
 		damageArea.BodyEntered += OnBodyEntered;
-
+		stepTimer = GetNode<Timer>("StepTimer");
+		stepTimer.Timeout += TakeStep;
 		stepTimer.Start(2.0f); // Comienza el temporizador para pequeños pasos
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (isDead) return; // Si está muerto, no hacemos nada más
+		if (isDead) return; // Para el control de animaciones
 
 		Vector2 velocity = Velocity;
 		
@@ -98,7 +96,7 @@ public partial class Jabali : CharacterBody2D
 		{
 			if (!isTakingDamage && (player == null || GlobalPosition.DistanceTo(player.GlobalPosition) > DetectionRange))
 			{
-				Velocity = Vector2.Zero; // Solo detenerse si el jugador no está cerca
+				Velocity = Vector2.Zero; 
 			}
 		};
 		resetVelocityTimer.Start();
@@ -116,7 +114,7 @@ public partial class Jabali : CharacterBody2D
 
 	public void TakeDamage(int damage, Vector2 hitDirection)
 	{
-		if (isTakingDamage || isDead) return; // Ignorar si ya está recibiendo daño o está muerto
+		if (isTakingDamage || isDead) return; 
 
 		Health -= damage;
 		GD.Print($"Jabalí took {damage} damage. Health is now {Health}.");
@@ -124,15 +122,15 @@ public partial class Jabali : CharacterBody2D
 		if (Health <= 0) 
 		{
 			// Detener todo movimiento y animaciones
-			isDead = true; // Marcar que el jabalí está muerto
+			isDead = true; 
 			Speed = 0; 
 			Velocity = Vector2.Zero;
 			animatedSprite.Play("hit");
-			deathTimer.Start(); // Iniciar temporizador de muerte
+			deathTimer.Start(); 
 		}
 		else
 		{
-			// Retroceso y animación de golpe
+			// Retroceso y animación de ser golpeado
 			knockBack = hitDirection * 23; // Ajustar retroceso más controlado
 			Speed = 0; 
 			isTakingDamage = true; 
@@ -144,12 +142,12 @@ public partial class Jabali : CharacterBody2D
 	private void GetHit()
 	{
 		isTakingDamage = false; 
-		Speed = 50; // Restaurar velocidad
+		Speed = 50;
 		animatedSprite.Play("run"); 
 	}
 
 	private void TimeOut()
 	{
-		QueueFree(); // Eliminar al jabalí después de morir
+		QueueFree(); 
 	}
 }

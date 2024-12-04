@@ -190,7 +190,7 @@ autoplay = "idle"
 position = Vector2(0, 4)
 shape = SubResource("CircleShape2D_dro4r")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="DeathTimer" type="Timer" parent="."]
 wait_time = 1.1
 one_shot = true
 
@@ -203,6 +203,9 @@ shape = SubResource("CapsuleShape2D_lpstn")
 [node name="HideTimer" type="Timer" parent="."]
 wait_time = 1.5
 
-[connection signal="timeout" from="Timer" to="." method="TimeOut"]
+[node name="StepTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="DeathTimer" to="." method="TimeOut"]
 [connection signal="body_entered" from="DamageArea" to="." method="OnBodyEntered"]
 [connection signal="timeout" from="HideTimer" to="." method="ExitHideState"]
+[connection signal="timeout" from="StepTimer" to="." method="TakeStep"]

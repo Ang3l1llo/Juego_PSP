@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://66u35hf8sbi3"]
+
+[ext_resource type="Script" path="res://Scripts/Hud.cs" id="1_ci84j"]
+[ext_resource type="Texture2D" uid="uid://dx4s8ypu02g50" path="res://Assets/HUD/Heart Bar/Heart Stage 5.png" id="2_f4gw5"]
+[ext_resource type="Texture2D" uid="uid://dc7kxcdhqtlgi" path="res://Assets/Espadote.png" id="3_cutgl"]
+[ext_resource type="Texture2D" uid="uid://c6o01kdkhu2a5" path="res://Assets/HUD/Heart Bar/Heart Stage 1.png" id="3_e2ms7"]
+
+[node name="HUD" type="CanvasLayer"]
+scale = Vector2(2, 2)
+transform = Transform2D(2, 0, 0, 2, 0, 0)
+script = ExtResource("1_ci84j")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -2.0
+offset_top = -7.0
+offset_right = 38.0
+offset_bottom = 33.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="healthBar" type="TextureProgressBar" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.525
+anchor_bottom = 1.625
+offset_left = -3.0
+offset_top = 1.0
+fill_mode = 3
+texture_under = ExtResource("2_f4gw5")
+texture_progress = ExtResource("3_e2ms7")
+
+[node name="SwordSprite" type="Sprite2D" parent="Control"]
+position = Vector2(93, 32.5)
+scale = Vector2(2.53125, 2.53125)
+texture = ExtResource("3_cutgl")

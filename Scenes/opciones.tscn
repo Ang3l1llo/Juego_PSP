@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4bm20kjs53ul"]
+
+[ext_resource type="Script" path="res://Scripts/Opciones.cs" id="1_qwhyt"]
+[ext_resource type="Texture2D" uid="uid://43sy2if2lxcm" path="res://Assets/Background/bosquecito (1).jpg" id="2_ddo4k"]
+
+[node name="Opciones" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qwhyt")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_ddo4k")
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 498.0
+offset_top = 503.0
+offset_right = 623.0
+offset_bottom = 543.0
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]

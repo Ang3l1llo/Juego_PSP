@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://cq6rafulku3d2"]
+
+[ext_resource type="Script" path="res://Scripts/BigSword.cs" id="1_2t4wc"]
+[ext_resource type="Texture2D" uid="uid://dc7kxcdhqtlgi" path="res://Assets/Espadote.png" id="1_4ctku"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fi6ln"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_4ctku")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uk4hb"]
+radius = 4.0
+height = 22.0
+
+[node name="BigSword" type="Area2D"]
+scale = Vector2(2, 2)
+collision_layer = 8
+script = ExtResource("1_2t4wc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = -0.785398
+sprite_frames = SubResource("SpriteFrames_fi6ln")
+frame_progress = 0.606747
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_uk4hb")

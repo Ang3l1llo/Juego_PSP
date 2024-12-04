@@ -1,0 +1,90 @@
+[gd_scene load_steps=13 format=3 uid="uid://bj7b6gybrdqf"]
+
+[ext_resource type="Texture2D" uid="uid://ctx5hm4gsns6h" path="res://Assets/Trees/Wooden Chest 1 -  Spritesheet.png" id="1_merdo"]
+[ext_resource type="Script" path="res://Scripts/Cofre.cs" id="1_qqnrq"]
+[ext_resource type="PackedScene" uid="uid://cq6rafulku3d2" path="res://Scenes/big_sword.tscn" id="3_ewprv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fttpw"]
+atlas = ExtResource("1_merdo")
+region = Rect2(0, 0, 48, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p2o4i"]
+atlas = ExtResource("1_merdo")
+region = Rect2(48, 0, 48, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k48wc"]
+atlas = ExtResource("1_merdo")
+region = Rect2(96, 0, 48, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_16mnx"]
+atlas = ExtResource("1_merdo")
+region = Rect2(144, 0, 48, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k8myv"]
+atlas = ExtResource("1_merdo")
+region = Rect2(192, 0, 48, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kadbb"]
+atlas = ExtResource("1_merdo")
+region = Rect2(0, 0, 48, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rvy8j"]
+atlas = ExtResource("1_merdo")
+region = Rect2(192, 0, 48, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t0hnk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fttpw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p2o4i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k48wc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_16mnx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k8myv")
+}],
+"loop": false,
+"name": &"animation",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kadbb")
+}],
+"loop": true,
+"name": &"close",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rvy8j")
+}],
+"loop": true,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w8gxs"]
+size = Vector2(43, 20)
+
+[node name="Cofre" type="Area2D"]
+script = ExtResource("1_qqnrq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_t0hnk")
+animation = &"animation"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 6)
+shape = SubResource("RectangleShape2D_w8gxs")
+
+[node name="BigSword" parent="." instance=ExtResource("3_ewprv")]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

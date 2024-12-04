@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Player : CharacterBody2D
 {
@@ -8,7 +9,10 @@ public partial class Player : CharacterBody2D
 	private AnimatedSprite2D animatedSprite2D;
 	private Timer deathTimer;
 	private Vector2 knockBack;
-
+	private TextureProgressBar healthBar;
+	public List<string> Inventory = new List<string>();
+	private Hud hud;
+	
 	// Variable para manejar si está atacando
 	public bool isAttacking = false;
 	
@@ -23,11 +27,15 @@ public partial class Player : CharacterBody2D
 		sword.SetPlayer(this);
 		deathTimer = GetNode<Timer>("Timer");
 		deathTimer.Timeout += TimeOut;
+		healthBar = GetNode<TextureProgressBar>("../HUD/Control/healthBar");
+		healthBar.Value = Health;
+		hud = GetNode<Hud>("../HUD");
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 velocity = Velocity;
+		healthBar.Value = Health;
 
 		// Añadir gravedad si no está en el suelo
 		if (!IsOnFloor())
@@ -84,14 +92,14 @@ public partial class Player : CharacterBody2D
 				
 					velocity.X = -Speed;
 					animatedSprite2D.FlipH = true;
-					sword.Position = new Vector2(-52, 0);
+					sword.Position = new Vector2(-45, 0);
 					animatedSprite2D.Play("run");
 				}
 				else if (Input.IsActionPressed("move_right"))
 				{
 					velocity.X = Speed;
 					animatedSprite2D.FlipH = false;
-					sword.Position = new Vector2(-4, 0);
+					sword.Position = new Vector2(1, 0);
 					animatedSprite2D.Play("run");
 				}
 				else
@@ -118,6 +126,20 @@ public partial class Player : CharacterBody2D
 			Die();
 		}
 	}
+	public void AddToInventory(string item)
+	{
+		Inventory.Add(item); 
+		GD.Print($"Item añadido al inventario: {item}");
+	}
+	
+	public void AddSword(){
+		hud.ShowSword();
+	}
+
+	public bool HasItem(string item)
+	{
+		return Inventory.Contains(item); 
+	}
 	
 	private void Die()
 	{
@@ -130,12 +152,7 @@ public partial class Player : CharacterBody2D
 	}
 	
 	public void TimeOut()
-	{
-		if(IsInsideTree()){ //Para evitar el error de que se llame al nodo player cuando ya no esta asociado a la escena
-			GetTree().ReloadCurrentScene();
-		}
-		 
-		
+	{	
+		GetTree().CallDeferred("change_scene_to_file", "res://Scenes/menu_muerte.tscn");
 	}
-	
 }
