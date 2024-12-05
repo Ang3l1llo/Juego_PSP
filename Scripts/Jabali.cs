@@ -32,7 +32,7 @@ public partial class Jabali : CharacterBody2D
 		damageArea.BodyEntered += OnBodyEntered;
 		stepTimer = GetNode<Timer>("StepTimer");
 		stepTimer.Timeout += TakeStep;
-		stepTimer.Start(2.0f); // Comienza el temporizador para pequeños pasos
+		stepTimer.Start(2.0f);
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -60,7 +60,7 @@ public partial class Jabali : CharacterBody2D
 		else if (player != null && GlobalPosition.DistanceTo(player.GlobalPosition) <= DetectionRange)
 		{
 			// Modo de correr hacia el jugador
-			if (!isTakingDamage) // No correr si está recibiendo daño
+			if (!isTakingDamage)
 			{
 				float directionX = (player.GlobalPosition.X - GlobalPosition.X) > 0 ? 1 : -1;
 				velocity.X = directionX * RunSpeed;
@@ -68,7 +68,6 @@ public partial class Jabali : CharacterBody2D
 				animatedSprite.FlipH = directionX > 0;
 				animatedSprite.Play("run");
 
-				// Ajustar posición del área de daño
 				damageArea.Position = new Vector2(directionX > 0 ? 30 : 0, damageArea.Position.Y);
 			}
 		}
@@ -114,7 +113,7 @@ public partial class Jabali : CharacterBody2D
 
 	public void TakeDamage(int damage, Vector2 hitDirection)
 	{
-		if (isTakingDamage || isDead) return; 
+		if (isTakingDamage) return; 
 
 		Health -= damage;
 		GD.Print($"Jabalí took {damage} damage. Health is now {Health}.");
@@ -122,9 +121,9 @@ public partial class Jabali : CharacterBody2D
 		if (Health <= 0) 
 		{
 			// Detener todo movimiento y animaciones
-			isDead = true; 
 			Speed = 0; 
 			Velocity = Vector2.Zero;
+			isTakingDamage = true;
 			animatedSprite.Play("hit");
 			deathTimer.Start(); 
 		}
@@ -135,7 +134,7 @@ public partial class Jabali : CharacterBody2D
 			Speed = 0; 
 			isTakingDamage = true; 
 			animatedSprite.Play("hit");
-			hitTimer.Start(1.0f); // Retrasar el retorno al movimiento
+			hitTimer.Start(1.0f); 
 		}
 	}
 
@@ -148,6 +147,10 @@ public partial class Jabali : CharacterBody2D
 
 	private void TimeOut()
 	{
+		if(isDead) return;
+		isDead = true;
+		var playerr = GetNode<Player>("/root/Game/Player");
+		playerr.OnEnemyKilled();
 		QueueFree(); 
 	}
 }

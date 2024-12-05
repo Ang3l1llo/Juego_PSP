@@ -9077,5 +9077,5 @@ collision_mask = 5
 [node name="HUD" parent="." instance=ExtResource("20_kax0f")]
 
 [node name="Cofre" parent="." instance=ExtResource("20_clu3y")]
-position = Vector2(-1567, -31)
+position = Vector2(-754, -31)
 collision_layer = 8

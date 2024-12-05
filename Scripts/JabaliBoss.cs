@@ -60,7 +60,7 @@ public partial class JabaliBoss : CharacterBody2D
 		else if (player != null && GlobalPosition.DistanceTo(player.GlobalPosition) <= DetectionRange)
 		{
 			// Modo de correr hacia el jugador
-			if (!isTakingDamage) // No correr si está recibiendo daño
+			if (!isTakingDamage) 
 			{
 				float directionX = (player.GlobalPosition.X - GlobalPosition.X) > 0 ? 1 : -1;
 				velocity.X = directionX * RunSpeed;
@@ -68,7 +68,6 @@ public partial class JabaliBoss : CharacterBody2D
 				animatedSprite.FlipH = directionX > 0;
 				animatedSprite.Play("run");
 
-				// Ajustar posición del área de daño
 				damageArea.Position = new Vector2(directionX > 0 ? 30 : 0, damageArea.Position.Y);
 			}
 		}
@@ -114,7 +113,7 @@ public partial class JabaliBoss : CharacterBody2D
 
 	public void TakeDamage(int damage, Vector2 hitDirection)
 	{
-		if (isTakingDamage || isDead) return; // Ignorar si ya está recibiendo daño o está muerto
+		if (isTakingDamage) return;
 
 		Health -= damage;
 		GD.Print($"Jabalí took {damage} damage. Health is now {Health}.");
@@ -122,20 +121,20 @@ public partial class JabaliBoss : CharacterBody2D
 		if (Health <= 0) 
 		{
 			// Detener todo movimiento y animaciones
-			isDead = true; // Marcar que el jabalí está muerto
 			Speed = 0; 
 			Velocity = Vector2.Zero;
+			isTakingDamage = true;
 			animatedSprite.Play("hit");
-			deathTimer.Start(); // Iniciar temporizador de muerte
+			deathTimer.Start(); 
 		}
 		else
 		{
 			// Retroceso y animación de ser golpeado
-			knockBack = hitDirection * 23; // Ajustar retroceso más controlado
+			knockBack = hitDirection * 23; // Retroceso más controlado
 			Speed = 0; 
 			isTakingDamage = true; 
 			animatedSprite.Play("hit");
-			hitTimer.Start(1.0f); // Retrasar el retorno al movimiento
+			hitTimer.Start(1.0f); 
 		}
 	}
 
@@ -148,6 +147,10 @@ public partial class JabaliBoss : CharacterBody2D
 
 	private void TimeOut()
 	{
+		if(isDead) return;
+		isDead = true;
+		var playerr = GetNode<Player>("/root/Game/Player");
+		playerr.OnEnemyKilled();
 		QueueFree(); 
 	}
 }

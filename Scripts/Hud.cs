@@ -22,4 +22,10 @@ public partial class Hud : CanvasLayer
 	{
 		sword.Visible = true;
 	}
+	
+	public void UpdateEnemyCount(int remainingEnemies)
+	{
+		var enemyCounter = GetNode<Label>("Control/EnemyCounter");
+		enemyCounter.Text = $"Enemies: {remainingEnemies}";
+	}
 }

@@ -12,8 +12,9 @@ public partial class Player : CharacterBody2D
 	private TextureProgressBar healthBar;
 	public List<string> Inventory = new List<string>();
 	private Hud hud;
+	private int enemiesToKill = 8;
+	private int enemiesKilled = 0;
 	
-	// Variable para manejar si está atacando
 	public bool isAttacking = false;
 	
 	public int Health = 100;
@@ -30,6 +31,7 @@ public partial class Player : CharacterBody2D
 		healthBar = GetNode<TextureProgressBar>("../HUD/Control/healthBar");
 		healthBar.Value = Health;
 		hud = GetNode<Hud>("../HUD");
+		hud.UpdateEnemyCount(enemiesToKill - enemiesKilled);
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -56,7 +58,7 @@ public partial class Player : CharacterBody2D
 			sword.CollisionMask = 2;  
 			
 			if(IsOnFloor()){
-				velocity.X = 0;// Detener el movimiento horizontal al atacar
+				velocity.X = 0;// Detener el movimiento horizontal al atacar, se veia raro
 			}
 			  
 		}
@@ -141,6 +143,24 @@ public partial class Player : CharacterBody2D
 		return Inventory.Contains(item); 
 	}
 	
+	public void OnEnemyKilled()
+	{
+		enemiesKilled++;
+		hud.UpdateEnemyCount(enemiesToKill - enemiesKilled);
+
+		if (enemiesKilled >= enemiesToKill)
+		{
+			ShowVictoryMenu();
+		}
+	}
+	
+	private void ShowVictoryMenu()
+	{
+		GD.Print("¡Has ganado!");
+		GetTree().ChangeSceneToFile("res://Scenes/menu_victoria.tscn");
+		
+	}
+	
 	private void Die()
 	{
 		GD.Print("Player has died.");
@@ -148,11 +168,10 @@ public partial class Player : CharacterBody2D
 		SetProcess(false);
 		SetPhysicsProcess(false);
 		deathTimer.Start();
-		
 	}
 	
 	public void TimeOut()
 	{	
-		GetTree().CallDeferred("change_scene_to_file", "res://Scenes/menu_muerte.tscn");
+		GetTree().CallDeferred("change_scene_to_file", "res://Scenes/menu_muerte.tscn");//Sin usar el calldeferred me daba un error, solucionado gracias a nuestro querido delegado
 	}
 }

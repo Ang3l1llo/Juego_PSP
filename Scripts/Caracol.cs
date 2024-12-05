@@ -14,6 +14,7 @@ public partial class Caracol : CharacterBody2D
 	private Timer deathTimer;
 	private Area2D damageArea;
 	private bool isHiding = false; 
+	private bool isDead = false;
 	private Timer hideTimer; 
 	private Timer stepTimer; 
 
@@ -144,6 +145,10 @@ public partial class Caracol : CharacterBody2D
 
 	private void TimeOut()
 	{
+		if(isDead) return;
+		isDead = true;
+		var playerr = GetNode<Player>("/root/Game/Player");
+		playerr.OnEnemyKilled();
 		QueueFree();  
 	}
 }

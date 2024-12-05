@@ -35,3 +35,12 @@ texture_progress = ExtResource("3_e2ms7")
 position = Vector2(93, 32.5)
 scale = Vector2(2.53125, 2.53125)
 texture = ExtResource("3_cutgl")
+
+[node name="EnemyCounter" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 135.5
+offset_top = 11.5
+offset_right = 218.5
+offset_bottom = 34.5
+text = "Enemies: x"
+horizontal_alignment = 2

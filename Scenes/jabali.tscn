@@ -183,7 +183,7 @@ shape = SubResource("CapsuleShape2D_5smio")
 [node name="StepTimer" type="Timer" parent="."]
 
 [node name="DeathTimer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.3
 
 [node name="HitTimer" type="Timer" parent="."]
 wait_time = 0.9

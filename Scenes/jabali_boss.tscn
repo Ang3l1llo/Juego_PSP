@@ -185,8 +185,10 @@ shape = SubResource("CapsuleShape2D_l40rd")
 [node name="StepTimer" type="Timer" parent="."]
 
 [node name="DeathTimer" type="Timer" parent="."]
+wait_time = 0.3
 
 [node name="HitTimer" type="Timer" parent="."]
+wait_time = 0.9
 
 [connection signal="timeout" from="StepTimer" to="." method="TakeStep"]
 [connection signal="timeout" from="DeathTimer" to="." method="TimeOut"]

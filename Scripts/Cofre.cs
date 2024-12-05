@@ -16,7 +16,7 @@ public partial class Cofre : Area2D
 		
 		swordTimer = new Timer();
 		AddChild(swordTimer);
-		swordTimer.WaitTime = 2.0f; // 2 segundos
+		swordTimer.WaitTime = 2.0f; 
 		swordTimer.OneShot = true;
 		swordTimer.Timeout += ShowSword; 
 	}
