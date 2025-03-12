@@ -32,6 +32,10 @@ text = "Play Again"
 layout_mode = 2
 text = "Exit"
 
+[node name="Button3" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Ver Ranking"
+
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 40.0
@@ -44,3 +48,4 @@ offset_bottom = 8.0
 
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button3" to="." method="_on_button_3_pressed"]
